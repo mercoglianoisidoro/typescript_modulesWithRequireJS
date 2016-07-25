@@ -10,6 +10,7 @@ you need npm in you system.
 
 ```bash
 npm install
+typings install
 ```
 
 
