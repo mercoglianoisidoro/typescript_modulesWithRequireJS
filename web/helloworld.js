@@ -1,3 +1,6 @@
+/**
+author : Isidoro Mercogliano
+*/
 define(["require", "exports", "jquery"], function (require, exports, $) {
     "use strict";
     console.debug("helloworld loaded");
