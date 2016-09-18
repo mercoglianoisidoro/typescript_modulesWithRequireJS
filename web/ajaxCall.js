@@ -42,16 +42,30 @@ define(["require", "exports", "jquery"], function (require, exports, $) {
                 self.successData.textStatus = textStatus;
                 self.successData.jqXHR = jqXHR;
             };
+            return this;
         }
         /*-----------setters----------- */
         ajaxCall.prototype.setUrl = function (url) {
             this.callData.url = url;
+            return this;
         };
         ajaxCall.prototype.setData = function (data) {
             this.callData.data = data;
+            return this;
+        };
+        ajaxCall.prototype.setDataDoSend = function (data) {
+            this.callData.data = data;
+            return this;
         };
         ajaxCall.prototype.setMethod = function (method) {
-            this.callData.method = method;
+            if (method !== 'POST' && method !== 'GET') {
+                console.log('errro method ' + method + '; setting method = GET');
+                this.callData.method = 'GET';
+            }
+            else {
+                this.callData.method = method;
+            }
+            return this;
         };
         /*-----------getters and accesser----------- */
         ajaxCall.prototype.getSuccessData = function () {
@@ -72,6 +86,7 @@ define(["require", "exports", "jquery"], function (require, exports, $) {
             if (this.callData.url == undefined) {
                 throw new Error("callData url absent");
             }
+            console.log(this.callData);
             var result = $.ajax(this.callData);
             if (this.thereIsError) {
                 throw new Error(this.errorData.jqXHR.statusText);
@@ -87,7 +102,7 @@ define(["require", "exports", "jquery"], function (require, exports, $) {
 //
 // //USAGE EXAMPLE
 // try {
-//     let urlTest = "http://localhost:3000/web/index.html";
+//     let urlTest = "http://10.0.3.110/workspaces/workspace_php/mercoglianoisidoro_api/index.php/testing";
 //     let call = new ajaxCall(urlTest);
 //     console.log('result=', call.execute());
 // } catch (error) {

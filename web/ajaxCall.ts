@@ -55,27 +55,45 @@ export class ajaxCall { //Doesnt work
         }
         this.callData.success = function (data: any, textStatus: string, jqXHR: JQueryXHR) {
 
-          //TODO: define type
+            //TODO: define type
             self.successData = {};
             self.successData.data = data;
             self.successData.textStatus = textStatus;
             self.successData.jqXHR = jqXHR;
         }
+        return this;
 
     }
 
     /*-----------setters----------- */
     setUrl(url: string) {
         this.callData.url = url;
+        return this;
     }
 
     setData(data: Object) {
         this.callData.data = data;
+        return this;
+    }
+
+    setDataDoSend(data: Object) {
+        this.callData.data = data;
+        return this;
     }
 
     setMethod(method: string) {
-        this.callData.method = method;
+        
+        if (method !== 'POST' && method !== 'GET'){
+            console.log('errro method '+method+'; setting method = GET');
+            this.callData.method = 'GET';
+        }else{
+            this.callData.method = method;
+        }
+        
+        
+        return this;
     }
+
 
     /*-----------getters and accesser----------- */
     getSuccessData(): Object {
@@ -91,6 +109,7 @@ export class ajaxCall { //Doesnt work
     }
 
 
+
     /**
      * execute callback
      * @throw Error
@@ -100,7 +119,7 @@ export class ajaxCall { //Doesnt work
         if (this.callData.url == undefined) {
             throw new Error("callData url absent");
         }
-
+console.log(this.callData);
         let result = $.ajax(this.callData);
 
         if (this.thereIsError) {
@@ -115,7 +134,7 @@ export class ajaxCall { //Doesnt work
 //
 // //USAGE EXAMPLE
 // try {
-//     let urlTest = "http://localhost:3000/web/index.html";
+//     let urlTest = "http://10.0.3.110/workspaces/workspace_php/mercoglianoisidoro_api/index.php/testing";
 //     let call = new ajaxCall(urlTest);
 //     console.log('result=', call.execute());
 // } catch (error) {
