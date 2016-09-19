@@ -7,12 +7,12 @@ requirejs.config({
 requirejs(["helloworld"]);
 requirejs(["secondModule"]);
 //example ajaxCall
-requirejs(["ajaxCall"], function (ajaxCall) {
-    //workaround:
-    ajaxCall = ajaxCall.ajaxCall;
+requirejs(['ajaxCall', 'helloworld'], function (ajaxCall) {
     try {
-        var urlTest = "http://localhost:3000/web/index.html";
+        var urlTest = "http://10.0.3.110/workspaces/workspace_php/mercoglianoisidoro_api/index.php/save_data";
         var call = new ajaxCall(urlTest);
+        call.setMethod('POST');
+        call.setDataDoSend({ 'param1': "val1" });
         console.log('result=', call.execute());
     }
     catch (error) {

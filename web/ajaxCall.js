@@ -97,7 +97,7 @@ define(["require", "exports", "jquery"], function (require, exports, $) {
         };
         return ajaxCall;
     }());
-    exports.ajaxCall = ajaxCall;
+    return ajaxCall;
 });
 //
 // //USAGE EXAMPLE

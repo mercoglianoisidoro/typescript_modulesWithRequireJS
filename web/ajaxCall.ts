@@ -10,7 +10,7 @@ import $ = require("jquery");
  * object to send an synchronous call
  */
 //export interface ajaxCall {
-export class ajaxCall { //Doesnt work
+class ajaxCall { //Doesnt work
 
     /**
      * data object consumed by $ajax
@@ -82,15 +82,15 @@ export class ajaxCall { //Doesnt work
     }
 
     setMethod(method: string) {
-        
+
         if (method !== 'POST' && method !== 'GET'){
             console.log('errro method '+method+'; setting method = GET');
             this.callData.method = 'GET';
         }else{
             this.callData.method = method;
         }
-        
-        
+
+
         return this;
     }
 
@@ -130,6 +130,8 @@ console.log(this.callData);
     }
 
 }
+
+export = ajaxCall ; //to export a single object
 
 //
 // //USAGE EXAMPLE
