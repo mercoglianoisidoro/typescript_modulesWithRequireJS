@@ -2,6 +2,9 @@
 author : Isidoro Mercogliano
 */
 
+
+/// <reference path="../typings/index.d.ts" />
+
 //to export data (not recommended)
 declare var window:any;
 

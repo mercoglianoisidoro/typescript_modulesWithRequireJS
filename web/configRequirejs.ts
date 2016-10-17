@@ -1,3 +1,6 @@
+
+/// <reference path="../typings/index.d.ts" />
+
 requirejs.config({
     paths: {
         "jquery": "../node_modules/jquery/dist/jquery",
