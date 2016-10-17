@@ -5,10 +5,20 @@
     "target": "es5",
     "module": "amd",
     "moduleResolution": "node",
-  //  "sourceMap": true,
+
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "removeComments": false,
     "noImplicitAny": false
-  }
+  },
+  "experimentalDecorators": true,
+  "declaration": true,
+  "include": [
+        "web/**/*",
+        "test/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "**/*.TODO.ts"
+    ]
 }
