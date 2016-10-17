@@ -8,7 +8,7 @@
         "tsc:w": "tsc -w",
         "lite": "lite-server",
         "start": "concurrent \"npm run tsc:w\" \"npm run lite\" ",
-        "test": "npm run tsc && node_modules/mocha/bin/mocha ./test_js || exit 0",
+        "test": "npm run tsc && node_modules/mocha/bin/mocha ./test_js",
         "test:w": "npm run tsc && node_modules/mocha/bin/mocha -w ./test_js/*"
     },
     "dependencies": {

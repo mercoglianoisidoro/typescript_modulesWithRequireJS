@@ -23,6 +23,9 @@ requirejs.config({
     }
 });
 
+//console.debug it is used in the modules
+console.debug = console.log;
+
 
 describe('test jquery mock', function() {
     it('test asynchronous loading', function(done) { //require is asynchronous => done() to be used
@@ -34,7 +37,6 @@ describe('test jquery mock', function() {
         requirejs(["jquery"], function($) {
             assert.equal(typeof $, 'function');
             assert.equal($.whoami(), 'jquey mock');
-
             done();
         });
     });
@@ -42,7 +44,6 @@ describe('test jquery mock', function() {
 
 
 describe('test helloworld', function() {
-
     it('test inivial value of the html element', function(done) { //require is asynchronous => done() to be used
         requirejs(["jquery"], function($) {
             var initialValue = $('#test').html();
@@ -50,16 +51,16 @@ describe('test helloworld', function() {
             done();
         });
     });
-
     it('html elemenet changed', function(done) { //require is asynchronous => done() to be used
+      requirejs(["helloworld"], function(helloworld) {
+          done();
+      });
+    });
+    it('test if html element has been changed', function(done) { //require is asynchronous => done() to be used
         requirejs(["jquery"], function($) {
-            console.log = function() {};
             var initialValue = $('#test').html();
-            assert.equal(initialValue, 'initialVal');
-            requirejs(["helloworld"], function(helloworld) {
-                assert.equal($('#test').html(), 'HELLO WORLD');
-                done();
-            });
+            assert.equal($('#test').html(), 'HELLO WORLD');
+            done();
         });
     });
 });
