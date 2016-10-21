@@ -15,7 +15,7 @@
   "declaration": true,
   "include": [
         "web/**/*",
-        "test/**/*"
+        "test_js/**/*"
     ],
     "exclude": [
         "node_modules",
