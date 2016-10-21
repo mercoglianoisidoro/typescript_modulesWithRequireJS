@@ -7,18 +7,22 @@
     "tsc": "tsc",
     "tsc:w": "tsc -w",
     "lite": "lite-server",
-    "start": "concurrent \"npm run tsc:w\" \"npm run lite\" "
+    "installAll": "npm install && typings install",
+    "start": "concurrent \"npm run tsc:w\" \"npm run lite\" ",
+    "test": "npm run tsc && node_modules/mocha/bin/mocha ./test_js",
+    "test:w": "npm run tsc && node_modules/mocha/bin/mocha -w ./test_js/*"
   },
   "dependencies": {
     "jquery": "^3.1.0",
     "requirejs": "^2.2.0"
-
   },
   "devDependencies": {
-    "lite-server": "^2.2.2",
     "concurrently": "^2.0.0",
-    "typings": "^1.0.4",
-    "typescript": "^2.0.2"
+    "lite-server": "^2.2.2",
+    "mocha": "^3.1.2",
+    "typescript": "^2.0.2",
+    "jsdom": "^9.8.0",
+    "typings": "^1.0.4"
   },
   "author": "Isidoro Mercogliano",
   "license": "MIT"
