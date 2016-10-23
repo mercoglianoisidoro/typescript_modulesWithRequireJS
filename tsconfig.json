@@ -12,7 +12,6 @@
     "noImplicitAny": false
   },
   "experimentalDecorators": true,
-  "declaration": true,
   "include": [
         "web/**/*",
         "test/**/*"

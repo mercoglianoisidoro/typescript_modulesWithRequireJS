@@ -1,10 +1,9 @@
 /// <reference path="../typings/index.d.ts" />
 
-var assert = require('assert');
-
 declare var requirejs_loader:any;
 declare var __dirname:string;
 
+var assert = require('assert');
 var requirejs_loader = require('requirejs');
 var util = require('util');
 

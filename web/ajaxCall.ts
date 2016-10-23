@@ -44,22 +44,24 @@ class ajaxCall { //Doesnt work
         if (url) {
             this.setUrl(url);
         }
-        this.callData.async = false;
-        this.callData.error = function (jqXHR: JQueryXHR, textStatus: string, errorThrown: string) {
+        this.callData.async = false; //default
+        this.callData.error = function(jqXHR: JQueryXHR, textStatus: string, errorThrown: string) {
             self.errorData = {};
             self.thereIsError = true;
-            self.errorData.jqXHR = jqXHR;
-            self.errorData.textStatus = textStatus;
-            self.errorData.errorThrown = errorThrown;
-            console.error(jqXHR);
+            self.errorData['jqXHR'] = jqXHR;
+            self.errorData['textStatus'] = textStatus;
+            self.errorData['errorThrown'] = errorThrown;
+            console.error('ajaxCall error callback, jqXHR string = ', JSON.stringify(self.errorData));
+            console.error('ajaxCall error callback, jqXHR = ', self.errorData);
+
         }
-        this.callData.success = function (data: any, textStatus: string, jqXHR: JQueryXHR) {
+        this.callData.success = function(data: any, textStatus: string, jqXHR: JQueryXHR) {
 
             //TODO: define type
-            self.successData = {};
-            self.successData.data = data;
-            self.successData.textStatus = textStatus;
-            self.successData.jqXHR = jqXHR;
+            self.successData = {}; ajaxCall
+            self.successData['data'] = data;
+            self.successData['textStatus'] = textStatus;
+            self.successData['jqXHR'] = jqXHR;
         }
         return this;
 
@@ -83,10 +85,9 @@ class ajaxCall { //Doesnt work
 
     setMethod(method: string) {
 
-        if (method !== 'POST' && method !== 'GET'){
-            console.log('errro method '+method+'; setting method = GET');
+        if (method !== 'POST' && method !== 'GET') {
             this.callData.method = 'GET';
-        }else{
+        } else {
             this.callData.method = method;
         }
 
@@ -114,16 +115,22 @@ class ajaxCall { //Doesnt work
      * execute callback
      * @throw Error
      */
-    execute() {
+    executeSync() {
         //TODO: DI for $
+
+        this.callData.async = false;
         if (this.callData.url == undefined) {
             throw new Error("callData url absent");
         }
-console.log(this.callData);
         let result = $.ajax(this.callData);
-
         if (this.thereIsError) {
-            throw new Error(this.errorData.jqXHR.statusText);
+            let errorDetail = '';
+            if (this.errorData['jqXHR'] && this.errorData['jqXHR'].statusText) {
+                errorDetail = this.errorData['jqXHR'].statusText;
+            } else {
+                errorDetail = JSON.stringify(this.errorData);
+            }
+            throw new Error(errorDetail);
         } else {
             return result.responseText;
         }
@@ -131,14 +138,14 @@ console.log(this.callData);
 
 }
 
-export = ajaxCall ; //to export a single object
+export = ajaxCall; //to export a single object
 
 //
-// //USAGE EXAMPLE
+//USAGE EXAMPLE
 // try {
-//     let urlTest = "http://10.0.3.110/workspaces/workspace_php/mercoglianoisidoro_api/index.php/testing";
+//     let urlTest = "http://google.com";
 //     let call = new ajaxCall(urlTest);
-//     console.log('result=', call.execute());
+//     console.log('result=', call.executeSync());
 // } catch (error) {
 //     console.error('error during call', error);
 // }

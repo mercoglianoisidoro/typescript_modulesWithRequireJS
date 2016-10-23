@@ -26,21 +26,23 @@ define(["require", "exports", "jquery"], function (require, exports, $) {
             if (url) {
                 this.setUrl(url);
             }
-            this.callData.async = false;
+            this.callData.async = false; //default
             this.callData.error = function (jqXHR, textStatus, errorThrown) {
                 self.errorData = {};
                 self.thereIsError = true;
-                self.errorData.jqXHR = jqXHR;
-                self.errorData.textStatus = textStatus;
-                self.errorData.errorThrown = errorThrown;
-                console.error(jqXHR);
+                self.errorData['jqXHR'] = jqXHR;
+                self.errorData['textStatus'] = textStatus;
+                self.errorData['errorThrown'] = errorThrown;
+                console.error('ajaxCall error callback, jqXHR string = ', JSON.stringify(self.errorData));
+                console.error('ajaxCall error callback, jqXHR = ', self.errorData);
             };
             this.callData.success = function (data, textStatus, jqXHR) {
                 //TODO: define type
                 self.successData = {};
-                self.successData.data = data;
-                self.successData.textStatus = textStatus;
-                self.successData.jqXHR = jqXHR;
+                ajaxCall;
+                self.successData['data'] = data;
+                self.successData['textStatus'] = textStatus;
+                self.successData['jqXHR'] = jqXHR;
             };
             return this;
         }
@@ -59,7 +61,6 @@ define(["require", "exports", "jquery"], function (require, exports, $) {
         };
         ajaxCall.prototype.setMethod = function (method) {
             if (method !== 'POST' && method !== 'GET') {
-                console.log('errro method ' + method + '; setting method = GET');
                 this.callData.method = 'GET';
             }
             else {
@@ -81,15 +82,22 @@ define(["require", "exports", "jquery"], function (require, exports, $) {
          * execute callback
          * @throw Error
          */
-        ajaxCall.prototype.execute = function () {
+        ajaxCall.prototype.executeSync = function () {
             //TODO: DI for $
+            this.callData.async = false;
             if (this.callData.url == undefined) {
                 throw new Error("callData url absent");
             }
-            console.log(this.callData);
             var result = $.ajax(this.callData);
             if (this.thereIsError) {
-                throw new Error(this.errorData.jqXHR.statusText);
+                var errorDetail = '';
+                if (this.errorData['jqXHR'] && this.errorData['jqXHR'].statusText) {
+                    errorDetail = this.errorData['jqXHR'].statusText;
+                }
+                else {
+                    errorDetail = JSON.stringify(this.errorData);
+                }
+                throw new Error(errorDetail);
             }
             else {
                 return result.responseText;
@@ -100,11 +108,11 @@ define(["require", "exports", "jquery"], function (require, exports, $) {
     return ajaxCall;
 });
 //
-// //USAGE EXAMPLE
+//USAGE EXAMPLE
 // try {
-//     let urlTest = "http://10.0.3.110/workspaces/workspace_php/mercoglianoisidoro_api/index.php/testing";
+//     let urlTest = "http://google.com";
 //     let call = new ajaxCall(urlTest);
-//     console.log('result=', call.execute());
+//     console.log('result=', call.executeSync());
 // } catch (error) {
 //     console.error('error during call', error);
 // }
