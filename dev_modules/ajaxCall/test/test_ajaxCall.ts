@@ -88,8 +88,8 @@ describe('ajaxCall', function() {
                 var call = new ajaxCall(urlTest);
                 var result = call.executeSync();
             } catch (error) {
-              // console.log(error.message)
-               assert.equal(error.message, 'SyntaxError');
+                // console.log(error.message)
+                assert.equal(error.message, 'SyntaxError');
                 done();
             }
             console.error = temp;
@@ -107,8 +107,8 @@ describe('ajaxCall', function() {
                 var call = new ajaxCall(urlTest);
                 var result = call.executeSync();
             } catch (error) {
-              // console.log(error.message)
-               assert.equal(error.message, 'error');
+                // console.log(error.message)
+                assert.equal(error.message, 'error');
                 done();
             }
             console.error = temp;
