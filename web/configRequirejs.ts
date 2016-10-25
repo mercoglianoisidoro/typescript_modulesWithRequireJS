@@ -15,16 +15,13 @@ import secondModule = require("./secondModule");console.log(secondModule);
 
 
 //example ajaxCall
- requirejs(['ajaxCall','helloworld'], function(ajaxCall) {
-
-     try {
-         var urlTest = "http://www.mercoglianoisidoro.com/api/saved_data/json";
-
-         var call = new ajaxCall(urlTest);
-         //call.setMethod('GET');         call.setDataDoSend({'param1':"val1"})
-
-         console.log('result=', call.executeSync());
-     } catch (error) {
-         console.error('error during call', error);
-     }
- });
+ // requirejs(['../dev_modules/ajaxCall/dist/ajaxCall','helloworld'], function(ajaxCall) {
+ //     try {
+ //         var urlTest = "http://www.mercoglianoisidoro.com/api/saved_data/json";
+ //         var call = new ajaxCall(urlTest);
+ //         //call.setMethod('GET'); call.setDataDoSend({'param1':"val1"})
+ //         console.log('result=', call.executeSync());
+ //     } catch (error) {
+ //         console.error('error during call', error);
+ //     }
+ // });
