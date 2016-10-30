@@ -4,8 +4,7 @@ Basic example of using requirejs with typescript.<br>
 One module is created, and the other use it.<br>
 
 <br>
-This repositoty can be used as incubator for new module, in particular you can use the directory dev_modules (where you need gulp to develop)
-
+This repositoty can be used as incubator for new modules, in particular you can use the directory dev_modules (where you need gulp to develop)
 
 
 
