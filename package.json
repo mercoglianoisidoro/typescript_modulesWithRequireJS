@@ -17,10 +17,14 @@
   },
   "devDependencies": {
     "concurrently": "^2.0.0",
+    "gulp": "^3.9.1",
+    "gulp-mocha": "^3.0.1",
+    "gulp-typescript": "^3.1.2",
+    "gulp-typings": "^2.0.4",
+    "jsdom": "^9.8.0",
     "lite-server": "^2.2.2",
     "mocha": "^3.1.2",
     "typescript": "^2.0.2",
-    "jsdom": "^9.8.0",
     "typings": "^1.0.4"
   },
   "author": "Isidoro Mercogliano",
