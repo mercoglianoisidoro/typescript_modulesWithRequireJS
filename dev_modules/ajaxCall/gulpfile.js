@@ -4,7 +4,7 @@ var gulp = require('gulp');
 var exec = require('child_process').exec;
 
 var ts = require('gulp-typescript');
-
+// var deletefile = require('gulp-delete-file');
 
 var gulp = require("gulp");
 var gulpTypings = require("gulp-typings");
@@ -45,16 +45,27 @@ function getTSConf() {
 
 }
 
+
 gulp.task('build_src', function() {
     var tsconfig = getTSConf();
     return gulp.src(['src/**/*.ts'])
         .pipe(ts(tsconfig.compilerOptions))
         .pipe(gulp.dest('dist'));
 });
+//
+// gulp.task('move_destination_files' ,['tsc_compile_src'], function() {
+//     gulp.src(['src/**/*.js'])
+//         .pipe(gulp.dest('dist'));
+//     gulp.src(['src/**/*.js'])
+//         .pipe(deletefile({
+//             deleteMatch: true //delete all
+//         }));
+// });
 
 
 gulp.task('build_tests', function() {
     var tsconfig = getTSConf();
+    tsconfig.compilerOptions.declaration=false;
     return gulp.src(['test/*.ts'])
         .pipe(ts(tsconfig.compilerOptions))
         .pipe(gulp.dest('test'));
@@ -83,4 +94,9 @@ gulp.task('test', ['build_src', 'build_tests'], function() {
 gulp.task('watch_and_test', ['test'], function() {
     gulp.watch(__dirname + '/**/*.ts', ['test']);
     //  gulp.watch(__dirname+'/www/*', ['build']);
+});
+
+
+gulp.task('watch_and_build', ['build_src'], function() {
+    gulp.watch(__dirname + '/**/*.ts', ['build_src']);
 });
