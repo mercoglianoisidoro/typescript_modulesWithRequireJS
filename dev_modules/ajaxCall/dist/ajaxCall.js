@@ -103,6 +103,18 @@ define(["require", "exports", "jquery"], function (require, exports, $) {
                 return result.responseText;
             }
         };
+        /**
+         * execute callback
+         * @throw Error
+         */
+        ajaxCall.prototype.executeASync = function () {
+            this.callData.async = true;
+            if (this.callData.url == undefined) {
+                throw new Error("callData url absent");
+            }
+            var resultPromise = $.ajax(this.callData);
+            return resultPromise;
+        };
         return ajaxCall;
     }());
     return ajaxCall;

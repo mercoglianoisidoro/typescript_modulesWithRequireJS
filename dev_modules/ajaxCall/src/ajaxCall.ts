@@ -64,22 +64,22 @@ class ajaxCall { //Doesnt work
     }
 
     /*-----------setters----------- */
-    setUrl(url: string) {
+    public setUrl(url: string) {
         this.callData.url = url;
         return this;
     }
 
-    setData(data: Object) {
+    public setData(data: Object) {
         this.callData.data = data;
         return this;
     }
 
-    setDataDoSend(data: Object) {
+    public setDataDoSend(data: Object) {
         this.callData.data = data;
         return this;
     }
 
-    setMethod(method: string) {
+    public setMethod(method: string) {
 
         if (method !== 'POST' && method !== 'GET') {
             this.callData.method = 'GET';
@@ -93,15 +93,15 @@ class ajaxCall { //Doesnt work
 
 
     /*-----------getters and accesser----------- */
-    getSuccessData(): Object {
+    public getSuccessData(): Object {
         return $.extend(true, {}, this.successData);
     }
 
-    getErrorData(): Object {
+    public getErrorData(): Object {
         return $.extend(true, {}, this.errorData);
     }
 
-    accessCallData(): Object {
+    public accessCallData(): Object {
         return this.callData;
     }
 
@@ -111,7 +111,7 @@ class ajaxCall { //Doesnt work
      * execute callback
      * @throw Error
      */
-    executeSync() {
+    public executeSync() {
         //TODO: DI for $
 
         this.callData.async = false;
@@ -131,6 +131,21 @@ class ajaxCall { //Doesnt work
             return result.responseText;
         }
     }
+
+        /**
+         * execute callback
+         * @throw Error
+         */
+        public executeASync() {
+
+            this.callData.async = true;
+            if (this.callData.url == undefined) {
+                throw new Error("callData url absent");
+            }
+            let resultPromise = $.ajax(this.callData);
+            return resultPromise;
+          
+        }
 
 }
 

@@ -39,7 +39,7 @@ console.debug = console.log;
 //         });
 //     });
 // });
-describe('ajaxCall', function () {
+describe('test loading', function () {
     it('test asynchronous loading', function (done) {
         requirejs_loader(["jquery"], function ($) {
             done();
@@ -52,6 +52,49 @@ describe('ajaxCall', function () {
             done();
         });
     });
+});
+describe('ajaxCall executeSync', function () {
+    this.timeout(5000); //the website is really slow
+    it('test with web page', function (done) {
+        requirejs_loader(["ajaxCall"], function (ajaxCall) {
+            //be cerefoul you need "Access-Control-Allow-Origin" header
+            var urlTest = "http://www.mercoglianoisidoro.com/api/saved_data/json";
+            var call = new ajaxCall(urlTest);
+            var promise = call.executeASync();
+            promise.then(function (result) {
+                assert.equal(typeof result, 'string');
+                done();
+            });
+        });
+    });
+    it('test SyntaxError', function (done) {
+        requirejs_loader(["ajaxCall"], function (ajaxCall) {
+            console.error = function () { };
+            var result = null;
+            //be cerefoul you need "Access-Control-Allow-Origin" header
+            var urlTest = "not_exist";
+            var call = new ajaxCall(urlTest);
+            call.executeASync().catch(function (error) {
+                assert.equal(error.statusText, 'SyntaxError');
+                done();
+            });
+        });
+    });
+    it('test error', function (done) {
+        requirejs_loader(["ajaxCall"], function (ajaxCall) {
+            var result = null;
+            //be cerefoul you need "Access-Control-Allow-Origin" header
+            var urlTest = "http://www.notexist123123123wwsx.com";
+            var call = new ajaxCall(urlTest);
+            call.executeASync().catch(function (error) {
+                assert.equal(error.statusText, 'error');
+                done();
+            });
+        });
+    });
+});
+describe('ajaxCall executeSync', function () {
+    this.timeout(5000); //the website is really slow
     it('test with web page', function (done) {
         requirejs_loader(["ajaxCall"], function (ajaxCall) {
             //be cerefoul you need "Access-Control-Allow-Origin" header

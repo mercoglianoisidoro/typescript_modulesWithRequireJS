@@ -32,5 +32,10 @@ declare class ajaxCall {
      * @throw Error
      */
     executeSync(): string;
+    /**
+     * execute callback
+     * @throw Error
+     */
+    executeASync(): JQueryXHR;
 }
 export = ajaxCall;
