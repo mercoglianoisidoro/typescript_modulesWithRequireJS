@@ -4,7 +4,7 @@ var gulp = require('gulp');
 var exec = require('child_process').exec;
 
 var ts = require('gulp-typescript');
-// var deletefile = require('gulp-delete-file');
+var deletefile = require('gulp-delete-file');
 
 var gulp = require("gulp");
 var gulpTypings = require("gulp-typings");
@@ -48,8 +48,9 @@ function getTSConf() {
 
 gulp.task('build_src', function() {
     var tsconfig = getTSConf();
+    var tsProject = ts.createProject('tsconfig.json');
     return gulp.src(['src/**/*.ts'])
-        .pipe(ts(tsconfig.compilerOptions))
+        .pipe(tsProject())
         .pipe(gulp.dest('dist'));
 });
 //
@@ -62,6 +63,13 @@ gulp.task('build_src', function() {
 //         }));
 // });
 
+gulp.task('clean', function() {
+    gulp.src(['src/**/*.js'])
+        .pipe(deletefile({
+            deleteMatch: true //delete all
+        }));
+});
+
 
 gulp.task('build_tests', function() {
     var tsconfig = getTSConf();
@@ -73,7 +81,7 @@ gulp.task('build_tests', function() {
 
 
 
-gulp.task('test', ['build_src', 'build_tests'], function() {
+gulp.task('test', ['build_src', 'build_tests','clean'], function() {
 
     var mocha = require('gulp-mocha');
     var gutil = require('gulp-util');
@@ -92,11 +100,15 @@ gulp.task('test', ['build_src', 'build_tests'], function() {
 
 
 gulp.task('watch_and_test', ['test'], function() {
-    gulp.watch(__dirname + '/**/*.ts', ['test']);
+    gulp.watch(__dirname + '/src/*.ts', ['test']);
+    gulp.watch(__dirname + '/test/*.ts', ['test']);
     //  gulp.watch(__dirname+'/www/*', ['build']);
 });
 
 
-gulp.task('watch_and_build', ['build_src'], function() {
-    gulp.watch(__dirname + '/**/*.ts', ['build_src']);
+gulp.task('watch_and_build', ['build_src','clean'], function() {
+    var watcher = gulp.watch(__dirname + '/src/*.ts', ['build_src']);
+    watcher.on('change', function(event) {
+      console.log(event.path + ' WAS ' + event.type);
+    });
 });
